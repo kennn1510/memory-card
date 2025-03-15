@@ -1,7 +1,6 @@
-html {
+html{
     height: 100%;
 }
 body {
-    min-height: 100%;
     background-image: linear-gradient(red, yellow);
 }
