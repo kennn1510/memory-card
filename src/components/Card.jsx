@@ -7,7 +7,8 @@ export default function Card() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await fetch("https://api.giphy.com/v1/gifs/trending?api_key=fH3UQo5yPZVd5rieYfAeWlYOkAl5dgJN");
+				const apiKey = import.meta.env.VITE_GIPHY_API_KEY;
+				const response = await fetch(`https://api.giphy.com/v1/gifs/trending?api_key=${apiKey}`);
 				if (!response.ok) {
 					throw new Error(`HTTP error! status: ${response.status}`);
 				}
