@@ -35,7 +35,7 @@ export function CardGrid() {
 			<>
 				<div className="card-grid">
 					{cardData.map((card) => {
-						<Card key={card.id} gifUrl={card.gifUrl} gifName={card.gifName}/>
+						return <Card key={card.id} gifUrl={card.gifUrl} gifName={card.gifName}/>
 					})}
 				</div>
 			</>
