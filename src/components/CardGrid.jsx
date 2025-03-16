@@ -4,6 +4,7 @@ import "../stylesheets/CardGrid.css";
 
 export function CardGrid({score, setScore, bestScore, setBestScore}) {
 	const [cardData, setCardData] = useState([]);
+	const [loading, setLoading] = useState(true);
 
 	// Fisher-Yates shuffle algorithm
 	const shuffleArray = (array) => {
@@ -36,6 +37,8 @@ export function CardGrid({score, setScore, bestScore, setBestScore}) {
 				}
 			} catch (error) {
 				console.error(error);
+			} finally {
+				setLoading(false);
 			}
 		};
 		fetchGifs();
@@ -64,6 +67,20 @@ export function CardGrid({score, setScore, bestScore, setBestScore}) {
 			setCardData(shuffleArray(cardData));
 		}
 	}
+
+	if (loading) {
+		return (
+				<div className="loading-container">
+					<div className="loading-dots">
+						<div className="loader2"></div>
+						<p>Loading GIFs</p>
+						<div className="loader2"></div>
+					</div>
+					<div className="loader"></div>
+				</div>
+		);
+	}
+
 	return (
 			<>
 				<div className="card-grid">
