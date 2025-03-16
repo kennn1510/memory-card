@@ -1,4 +1,3 @@
-import {useState} from "react";
 import "../stylesheets/Header.css"
 
 function HeaderTopLeft() {
@@ -12,10 +11,7 @@ function HeaderTopLeft() {
 	)
 }
 
-function HeaderTopRight() {
-	const [score, setScore] = useState(0);
-	const [bestScore, setBestScore] = useState(0);
-
+function HeaderTopRight({score, bestScore}) {
 	return (
 			<>
 				<div>
@@ -26,12 +22,12 @@ function HeaderTopRight() {
 	)
 }
 
-function Header() {
+function Header({score, bestScore}) {
 		return (
 				<>
 					<header>
 						<HeaderTopLeft></HeaderTopLeft>
-						<HeaderTopRight></HeaderTopRight>
+						<HeaderTopRight score={score} bestScore={bestScore}></HeaderTopRight>
 					</header>
 				</>
 		)

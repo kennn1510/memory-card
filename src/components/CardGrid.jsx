@@ -2,8 +2,18 @@ import {useEffect, useState} from "react";
 import Card from './Card';
 import "../stylesheets/CardGrid.css";
 
-export function CardGrid() {
+export function CardGrid({score, setScore, bestScore, setBestScore}) {
 	const [cardData, setCardData] = useState([]);
+
+	// Fisher-Yates shuffle algorithm
+	const shuffleArray = (array) => {
+		const newArray = [...array];
+		for (let i = newArray.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+		}
+		return newArray;
+	};
 
 	useEffect(() => {
 		const fetchGifs = async () => {
@@ -31,11 +41,34 @@ export function CardGrid() {
 		fetchGifs();
 	}, [])
 
+	const [clickedCards, setClickedCards] = useState(new Set());
+
+	const updateBestScore = (newScore) => {
+		if (newScore > bestScore) {
+			setBestScore(newScore);
+		}
+	};
+
+	const handleCardClick = (cardId) => {
+		if (clickedCards.has(cardId)) {
+			setScore(0);
+			setClickedCards(new Set());
+			setCardData(shuffleArray(cardData));
+		} else {
+			const newClickedCards = new Set(clickedCards);
+			newClickedCards.add(cardId);
+			setClickedCards(newClickedCards);
+			const newScore = score + 1;
+			setScore(newScore);
+			updateBestScore(newScore);
+			setCardData(shuffleArray(cardData));
+		}
+	}
 	return (
 			<>
 				<div className="card-grid">
 					{cardData.map((card) => {
-						return <Card key={card.id} gifUrl={card.gifUrl} gifName={card.gifName}/>
+						return <Card key={card.id} gifUrl={card.gifUrl} gifName={card.gifName} onClick={()=>handleCardClick(card.id)} />
 					})}
 				</div>
 			</>
